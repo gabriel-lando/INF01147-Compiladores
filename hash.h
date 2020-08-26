@@ -1,3 +1,5 @@
+// Aluno: Gabriel Lando
+
 #define HASH_SIZE 997
 #define STRING_SIZE 100
 

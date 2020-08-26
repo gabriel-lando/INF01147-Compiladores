@@ -1,3 +1,5 @@
+// Aluno: Gabriel Lando
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

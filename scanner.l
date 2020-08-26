@@ -1,4 +1,5 @@
 %{
+    // Aluno: Gabriel Lando
     #include "tokens.h"
     #include "hash.h"
 
@@ -87,4 +88,10 @@ int isRunning() {
 int yywrap() {
     Running = 0;
     return 1;
+}
+
+void initMe() {
+	running = 1;
+	lineNumber = 1;
+	hashInit();
 }

@@ -1,5 +1,9 @@
 %{
     #include "tokens.h"
+    #include "hash.h"
+
+    char *s;
+    char buffer[STRING_SIZE];
 
     int Running = 1;
     int lineNumber = 1;
@@ -25,7 +29,6 @@
 "return"  return KW_RETURN;
 
 [,;:()[]{}+-*/<>=|^~&$#]    return yytext[0];
-[-,;:dbqp+*\{\}/<>=!&$#]		{ return yytext[0]; }
 
 "<="    return OPERATOR_LE;
 ">="    return OPERATOR_GE;
@@ -35,20 +38,10 @@
 "TRUE"  return LIT_TRUE;
 "FALSE" return LIT_FALSE;
 
-^[-+]?[0-9A-F]]*    hashInsert(yytext); return LIT_INTEGER;
-^[-+]?[0-9]*[.][0-9]+$  hashInsert(yytext); return LIT_FLOAT;
+[0-9A-F]*               hashInsert(yytext); return LIT_INTEGER;
+[0-9A-F]*\.[0-9A-F]*    hashInsert(yytext); return LIT_FLOAT;
 
-\"  { BEGIN(STRING); s = buffer;
-<STRING>\\n     *s++ = '\n';
-<STRING>\\\"    *s++ = '\"';
-<STRING>\"      {	*s = 0;
-                    BEGIN(INITIAL);
-                    yytext = buffer;
-                    hashInsert(yytext);
-                    return LIT_STRING;
-                }
-<STRING>\[-ACE-OR-Zace-or-z_0-9]*  *s++ = yytext[0];
-<STRING>.   *s++ = *yytext;
+\"      BEGIN(STRING); s = buffer;
 
 \'.\'   hashInsert(yytext); return LIT_CHAR;
 
@@ -64,6 +57,16 @@
 <COMMENT>.
 <COMMENT>"\n"   ++lineNumber;
 <COMMENT>"*/"   BEGIN(INITIAL);
+
+<STRING>\\n     *s++ = '\n';
+<STRING>\\\"    *s++ = '\"';
+<STRING>\"      {	*s = 0;
+                    BEGIN(INITIAL);
+                    yytext = buffer;
+                    hashInsert(yytext);
+                    return LIT_STRING;
+                }
+<STRING>.       *s++ = *yytext;
 
 %%
 

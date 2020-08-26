@@ -31,7 +31,7 @@ int main(int argc, char ** argv) {
         if (!isRunning())
             break;
 
-        fprintf(stderr, "%d=%d ", i, yytext);
+        fprintf(stderr, "%d=%s ", i, yytext);
         switch(token) {
             case KW_CHAR: printf("Char\n"); break;
             case KW_INT: printf("Int\n"); break;

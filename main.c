@@ -31,7 +31,7 @@ int main(int argc, char ** argv) {
         if (!isRunning())
             break;
 
-        fprintf(stderr, "%d=%s ", i, yytext);
+        fprintf(stderr, "%d (%s) ", i, yytext);
         switch(token) {
             case KW_CHAR: printf("Char\n"); break;
             case KW_INT: printf("Int\n"); break;
@@ -57,7 +57,7 @@ int main(int argc, char ** argv) {
             case LIT_CHAR: printf("LIT_CHAR\n"); break;
             case LIT_STRING: printf("LIT_STRING\n"); break;
             case TOKEN_ERROR: printf("TOKEN_ERROR\n"); break;
-            default: printf("ERROR\n"); break;
+            default: printf("Outro: %c\n", yytext[0]); break;
         }
 
         ++i;

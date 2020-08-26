@@ -5,9 +5,12 @@
     int lineNumber = 1;
 }%
 
+%x COMMENT
+%x STRING
+
 %%
 
-%"char"  hashInsert(yytext); return KW_CHAR;
+//"char"  hashInsert(yytext); return KW_CHAR;
 
 "char"  return KW_CHAR;
 "int"  return KW_INT;
@@ -23,15 +26,61 @@
 "print"  return KW_PRINT;
 "return"  return KW_RETURN;
 
+[,;:()[]{}+-*/<>=|^~&$#]    return yytext[0];
+[-,;:dbqp+*\{\}/<>=!&$#]		{ return yytext[0]; }
+
+"<="    return OPERATOR_LE;
+">="    return OPERATOR_GE;
+"=="    return OPERATOR_EQ;
+"!="    return OPERATOR_DIF;
+
+"TRUE"  return LIT_TRUE;
+"FALSE" return LIT_FALSE;
+
+^[-+]?[0-9A-F]]*    hashInsert(yytext); return LIT_INTEGER;
+^[-+]?[0-9]*[.][0-9]+$  hashInsert(yytext); return LIT_FLOAT;
+
+// \"  { BEGIN(STRING); s = buffer;
+// <STRING>\\n     *s++ = '\n';
+// <STRING>\\\"    *s++ = '\"';
+// <STRING>\"      {	*s = 0;
+//                     BEGIN(INITIAL);
+//                     yytext = buffer;
+//                     hashInsert(yytext);
+//                     return LIT_STRING;
+//                 }
+// <STRING>\[-ACE-OR-Zace-or-z_0-9]*  *s++ = yytext[0];
+// <STRING>.   *s++ = *yytext;
+
+\'.\'   hashInsert(yytext); return LIT_CHAR;
+//\".*\"  hashInsert(yytext); return LIT_STRING;
+
+^[a-zA-Z_@][a-zA-Z0-9_@]*   return TK_IDENTIFIER;
+
+"\n"    ++lineNumber;
+[ \t]   //Do nothing
+"//".*  //Do nothing
+"/*"    BEGIN(COMMENT);
+
+. return TOKEN_ERROR;
+
+<COMMENT>.
+<COMMENT>"\n"   ++lineNumber;
+<COMMENT>"*/"   BEGIN(INITIAL);
 
 %%
 
 #include "main.c"
 
-int getLineNumber(){
+int getLineNumber() {
     return lineNumber;
 }
 
-int isRunning(){
+int isRunning() {
     return Running;
+}
+
+int yywrap() {
+    Running = 0;
+    return 1;
 }

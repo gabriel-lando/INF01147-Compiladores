@@ -43,7 +43,7 @@
 
 \"      BEGIN(STRING); s = buffer;
 
-\'.\'   hashInsert(yytext); return LIT_CHAR;
+\'.\'   hashInsert(yytext[0]); return LIT_CHAR;
 
 [a-zA-Z_@][a-zA-Z0-9_@]*   return TK_IDENTIFIER;
 

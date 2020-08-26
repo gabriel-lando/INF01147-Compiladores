@@ -91,7 +91,7 @@ int yywrap() {
 }
 
 void initMe() {
-	running = 1;
+	Running = 1;
 	lineNumber = 1;
 	hashInit();
 }

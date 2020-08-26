@@ -31,6 +31,7 @@ int main(int argc, char ** argv) {
         if (!isRunning())
             break;
 
+        fprintf(stderr, "%d=%d ", i, yytext);
         switch(token) {
             case KW_CHAR: printf("Char\n"); break;
             case KW_INT: printf("Int\n"); break;
@@ -59,7 +60,6 @@ int main(int argc, char ** argv) {
             default: printf("ERROR\n"); break;
         }
 
-        fprintf(stderr, "%d=%d", i, yytext);
         ++i;
     }
 }

@@ -10,8 +10,6 @@
 
 %%
 
-//"char"  hashInsert(yytext); return KW_CHAR;
-
 "char"  return KW_CHAR;
 "int"  return KW_INT;
 "float"  return KW_FLOAT;
@@ -40,20 +38,19 @@
 ^[-+]?[0-9A-F]]*    hashInsert(yytext); return LIT_INTEGER;
 ^[-+]?[0-9]*[.][0-9]+$  hashInsert(yytext); return LIT_FLOAT;
 
-// \"  { BEGIN(STRING); s = buffer;
-// <STRING>\\n     *s++ = '\n';
-// <STRING>\\\"    *s++ = '\"';
-// <STRING>\"      {	*s = 0;
-//                     BEGIN(INITIAL);
-//                     yytext = buffer;
-//                     hashInsert(yytext);
-//                     return LIT_STRING;
-//                 }
-// <STRING>\[-ACE-OR-Zace-or-z_0-9]*  *s++ = yytext[0];
-// <STRING>.   *s++ = *yytext;
+\"  { BEGIN(STRING); s = buffer;
+<STRING>\\n     *s++ = '\n';
+<STRING>\\\"    *s++ = '\"';
+<STRING>\"      {	*s = 0;
+                    BEGIN(INITIAL);
+                    yytext = buffer;
+                    hashInsert(yytext);
+                    return LIT_STRING;
+                }
+<STRING>\[-ACE-OR-Zace-or-z_0-9]*  *s++ = yytext[0];
+<STRING>.   *s++ = *yytext;
 
 \'.\'   hashInsert(yytext); return LIT_CHAR;
-//\".*\"  hashInsert(yytext); return LIT_STRING;
 
 ^[a-zA-Z_@][a-zA-Z0-9_@]*   return TK_IDENTIFIER;
 

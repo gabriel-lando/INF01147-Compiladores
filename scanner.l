@@ -48,7 +48,7 @@
             hashInsert(yytext);
             return LIT_CHAR;
         }
-
+        
 [a-zA-Z_@][a-zA-Z0-9_@]*   return TK_IDENTIFIER;
 
 "\n"    ++lineNumber;

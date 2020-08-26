@@ -7,7 +7,7 @@
 
     int Running = 1;
     int lineNumber = 1;
-}%
+%}
 
 %x COMMENT
 %x STRING
@@ -41,9 +41,9 @@
 [0-9A-F]*               hashInsert(yytext); return LIT_INTEGER;
 [0-9A-F]*\.[0-9A-F]*    hashInsert(yytext); return LIT_FLOAT;
 
-// \"      BEGIN(STRING); s = buffer;
+\"      BEGIN(STRING); s = buffer;
 
-// \'.\'   hashInsert(yytext); return LIT_CHAR;
+\'.\'   hashInsert(yytext); return LIT_CHAR;
 
 ^[a-zA-Z_@][a-zA-Z0-9_@]*   return TK_IDENTIFIER;
 
@@ -58,15 +58,15 @@
 <COMMENT>"\n"   ++lineNumber;
 <COMMENT>"*/"   BEGIN(INITIAL);
 
-// <STRING>\\n     *s++ = '\n';
-// <STRING>\\\"    *s++ = '\"';
-// <STRING>\"      {	*s = 0;
-//                     BEGIN(INITIAL);
-//                     yytext = buffer;
-//                     hashInsert(yytext);
-//                     return LIT_STRING;
-//                 }
-// <STRING>.       *s++ = *yytext;
+<STRING>\\n     *s++ = '\n';
+<STRING>\\\"    *s++ = '\"';
+<STRING>\"      {	*s = 0;
+                    BEGIN(INITIAL);
+                    yytext = buffer;
+                    hashInsert(yytext);
+                    return LIT_STRING;
+                }
+<STRING>.       *s++ = *yytext;
 
 %%
 

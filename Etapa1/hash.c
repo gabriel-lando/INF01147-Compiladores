@@ -58,7 +58,7 @@ void hashPrint(void) {
     int i;
     for (i = 0; i < HASH_SIZE; ++i) {
         for (node = Table[i]; node; node = node -> next) {
-            fprintf(stderr, "Table[%d] has %s \n", i, node -> text);
+            fprintf(stderr, "Table [%3d]: %s \n", i, node -> text);
         }
     }
 }

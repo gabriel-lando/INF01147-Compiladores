@@ -8,7 +8,7 @@
 # and #include "main.c" in the last part of the scanner.l
 #
 
-etapa1: lex.yy.c
+etapa1: lex.yy.c main.c hash.c
 	gcc -o etapa1 lex.yy.c hash.c
 lex.yy.c: scanner.l
 	lex scanner.l

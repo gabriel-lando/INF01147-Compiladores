@@ -44,7 +44,7 @@
 \"      BEGIN(STRING); s = buffer;
 
 \'.\'   {   yytext[0] = yytext[1]; 
-            yytext[1] = '\n';
+            yytext[1] = '\0';
             hashInsert(yytext);
             return LIT_CHAR;
         }

@@ -24,7 +24,7 @@
 "print"                          return KW_PRINT;
 "return"                         return KW_RETURN;
 
-[,;:()\[\]{}\+-/<>=|^~&$#]       return yytext[0];
+[,;:()\[\]{}\+-/<>=|^~&$#*]      return yytext[0];
 
 "<="                             return OPERATOR_LE;
 ">="                             return OPERATOR_GE;

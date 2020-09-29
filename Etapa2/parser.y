@@ -47,7 +47,7 @@ programa: decl
     ;
     
 decl: dec ';' decl
-    | %empty
+    | 
     ;
 
 dec: TK_IDENTIFIER '=' types ':' literals
@@ -60,7 +60,7 @@ block: '{' command_list '}'
     ;
 
 command_list: cmd command_list
-    | %empty
+    | 
     ;
 
 cmd: TK_IDENTIFIER '=' expr
@@ -73,14 +73,14 @@ cmd: TK_IDENTIFIER '=' expr
     | KW_WHILE '(' expr ')' cmd
     | KW_LOOP '(' TK_IDENTIFIER ':' expr ',' expr ',' expr ')' cmd
     | block
-    | %empty
+    | 
     ;
 
 print_list: print_cmd rest_print_list
     ;
 
 rest_print_list: ',' print_cmd rest_print_list
-    | %empty
+    | 
     ;
 
 print_cmd: LIT_STRING
@@ -108,25 +108,25 @@ expr: TK_IDENTIFIER
     ;
 
 func_args: expr rest_func_args
-    | %empty
+    | 
     ;
 
 rest_func_args: ',' expr rest_func_args
-    | %empty
+    | 
     ;
 
 params_func: params params_resto
-    | %empty
+    | 
     ;
 
 params_resto: ',' params params_resto
-    | %empty
+    | 
     ;
 
 params: TK_IDENTIFIER '=' types
     ;
 
-types: %empty
+types: 
     | KW_CHAR
     | KW_INT
     | KW_FLOAT
@@ -134,7 +134,7 @@ types: %empty
     ;
 
 lit_list: literals lit_list
-    | %empty
+    | 
     ;
 
 literals: LIT_CHAR
